@@ -35,13 +35,13 @@
         .error-text { color: #ef4444; font-weight: bold; }
         .math-block { margin: 1.5rem 0; padding: 1rem; background-color: #f0f9ff; border-left: 4px solid #38bdf8; font-size: 1.1rem; overflow-x: auto;}
         .footer-attribution { margin-top: 1.5rem; font-size: 0.875rem; line-height: 1.25rem; color: #6b7280; text-align: center; }
-        .titration-flask { width: 100px; height: 150px; border: 2px solid #9ca3af; border-radius: 0 0 50px 50px; margin: 1rem auto; position: relative; background-color: #eff6ff; overflow: hidden;}
-        .titration-liquid { position: absolute; bottom: 0; left: 0; width: 100%; height: 70%; transition: background-color 0.3s; background-color: #bfdbfe;}
-        .titration-endpoint { background-color: #fbcfe8 !important; } /* light pink */
-        .titration-excess { background-color: #f9a8d4 !important; } /* stronger pink */
         .slider-container div { margin-bottom: 1rem;}
         .slider-label { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.25rem;}
         .slider-label span:last-child { font-size: 0.9rem; font-weight: 500; color: #075985; min-width: 70px; text-align: right;}
+        .titration-flask { width: 100px; height: 150px; border: 2px solid #9ca3af; border-radius: 0 0 50px 50px; margin: 1rem auto; position: relative; background-color: #eff6ff; overflow: hidden;}
+        .titration-liquid { position: absolute; bottom: 0; left: 0; width: 100%; transition: height 0.3s, background-color 0.3s; background-color: #bfdbfe;}
+        .titration-color-excess { background-color: #fbcfe8 !important; }
+        .titration-color-endpoint { background-color: #fce7f3 !important; }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800 antialiased">
@@ -56,22 +56,23 @@
 
         <section id="intro" class="mb-12 p-6 rounded-lg shadow-lg section-bg-white">
             <h2 class="text-sky-700 border-b-2 border-sky-200 pb-2 mb-6">11.1 Matèria Orgànica de l'Aigua (Permanganimetria)</h2>
-            <p>S'agrupa sota el concepte de <strong>matèria orgànica de l'aigua</strong> totes les substàncies presents que poden ser oxidades químicament, en condicions definides, per un agent oxidant fort com el permanganat de potassi (KMnO₄) en medi àcid i a temperatura d'ebullició.</p>
+            <p>S'agrupa sota el concepte de <strong>matèria orgànica de l'aigua</strong> totes les substàncies presents que poden ser oxidades químicament, en condicions definides (medi àcid, temperatura d'ebullició), per un agent oxidant fort com el permanganat de potassi (KMnO₄).</p>
             <p>La presència de matèria orgànica a l'aigua pot tenir diverses implicacions:</p>
             <ul class="list-disc list-inside pl-4 mb-4">
-                <li><strong>Qualitat organolèptica:</strong> Algunes matèries orgàniques són causa del color i del mal gust de l'aigua.</li>
-                <li><strong>Desenvolupament microbiològic:</strong> Afavoreixen el creixement de microorganismes (algues, fongs, bacteris) que poden adherir-se a les canonades i secretar substàncies oloroses.</li>
-                <li><strong>Indicador de contaminació:</strong> Un contingut elevat de matèria orgànica pot ser indicatiu de contaminació bacteriològica (excrements, matèria en descomposició) o química (abocaments industrials, pesticides).</li>
+                <li><strong>Qualitat organolèptica:</strong> Algunes matèries orgàniques (ex: àcids húmics/fúlvics) són causa del color i del mal gust de l'aigua.</li>
+                <li><strong>Desenvolupament microbiològic:</strong> Afavoreixen el creixement de microorganismes (algues, fongs, bacteris) que poden adherir-se a les canonades (biofilms) i secretar substàncies oloroses.</li>
+                <li><strong>Indicador de contaminació:</strong> Un contingut elevat de matèria orgànica pot ser indicatiu de contaminació fecal (bacteriològica) o química (abocaments industrials, pesticides, etc.).</li>
+                <li><strong>Formació de subproductes de desinfecció (DBPs):</strong> La reacció de la matèria orgànica amb desinfectants com el clor pot generar compostos potencialment nocius (ex: trihalometans).</li>
             </ul>
-            <p>La determinació de la matèria orgànica oxidable amb permanganat, sovint expressada com a "oxigen consumit" o "índex de permanganat", és un paràmetre clàssic de control de la qualitat de l'aigua.</p>
+            <p>La determinació de la matèria orgànica oxidable amb permanganat, sovint expressada com a "oxigen consumit" o "índex de permanganat", és un paràmetre clàssic i ràpid per estimar el contingut global de matèria oxidable, tot i que no diferencia entre els tipus de compostos orgànics.</p>
         </section>
 
         <section id="reactius" class="mb-12 p-6 rounded-lg shadow-lg section-bg-light">
             <h2 class="text-sky-700 border-b-2 border-sky-200 pb-2 mb-6">Reactius Necessaris</h2>
             <ul class="list-disc list-inside pl-4 mb-4">
-                <li>Àcid sulfúric concentrat (\(H_2SO_4\))</li>
+                <li>Àcid sulfúric concentrat (\(H_2SO_4\), 95-98%)</li>
                 <li>Permanganat potàssic (\(KMnO_4\)) dissolució aprox. 0.01 N (Normalitat)</li>
-                <li>Àcid oxàlic (\(H_2C_2O_4\)) o Oxalat sòdic (\(Na_2C_2O_4\)) patró primari o dissolució valorada 0.01 N</li>
+                <li>Àcid oxàlic (\(H_2C_2O_4 \cdot 2H_2O\), MM=126.07 g/mol) o Oxalat sòdic (\(Na_2C_2O_4\), MM=134.00 g/mol) patró primari o dissolució valorada 0.01 N</li>
                 <li>Aigua destil·lada o de qualitat equivalent (Milli-Q)</li>
             </ul>
         </section>
@@ -80,23 +81,17 @@
             <h2 class="text-sky-700 border-b-2 border-sky-200 pb-2 mb-6">Procediment Experimental</h2>
 
             <h3>1. Preparació i Estandardització de la dissolució de KMnO₄ (~0.01 N)</h3>
-            <p>El KMnO₄ no és un patró primari pur, per la qual cosa la seva dissolució s'ha d'estandarditzar.</p>
+            <p>El KMnO₄ no és patró primari. Cal estandarditzar la dissolució preparada.</p>
             <ol class="list-decimal list-inside pl-4 space-y-2">
-                <li>Preparar una dissolució aproximadament 0.1 N de KMnO₄ (Massa molar KMnO₄ ≈ 158.03 g/mol). Per a la reacció en medi àcid (Mn⁷⁺ → Mn²⁺, 5 electrons), el pes equivalent és MM/5 ≈ 31.61 g/eq. Per preparar 1L de 0.1 N, es necessiten 3.16 g. Per a 0.01 N, es necessitarien 0.316 g/L. Sovint es prepara una 0.1 N i es dilueix 1:10 per obtenir 0.01 N.</li>
-                <li>Escalfar la dissolució preparada a ebullició durant un temps i deixar refredar i reposar (per oxidar impureses reductores) i filtrar si cal.</li>
-                <li><strong>Estandardització amb Oxalat Sòdic (\(Na_2C_2O_4\)):</strong> L'oxalat sòdic (MM ≈ 134.00 g/mol) és un bon patró primari. La reacció és:
-                    <div class="math-block">$$ 5 C_2O_4^{2-} + 2 MnO_4^- + 16 H^+ \rightarrow 10 CO_2 + 2 Mn^{2+} + 8 H_2O $$</div>
-                    El pes equivalent del Na₂C₂O₄ és MM/2 = 134.00 / 2 = 67.00 g/eq.
-                </li>
-                <li>Pesar amb precisió una quantitat d'oxalat sòdic sec (assecat a 105-110°C) calculada per consumir uns 15-25 mL de la dissolució de KMnO₄ ~0.01 N.</li>
-                <li>Dissoldre l'oxalat en uns 25-50 mL d'aigua Milli-Q i afegir 1-5 mL de H₂SO₄ concentrat (amb precaució!).</li>
-                <li>Escalfar la dissolució d'oxalat a uns 70-80°C (prop de l'ebullició).</li>
-                <li>Valorar en calent amb la dissolució de KMnO₄ des d'una bureta. Afegir lentament al principi, esperant que el color porpra desaparegui abans d'afegir més (la reacció és autocatalítica per Mn²⁺).</li>
-                <li>Continuar la valoració fins que una gota de KMnO₄ produeixi una persistència del color rosat pàl·lid durant almenys 30 segons. Aquest és el punt final. Anotar el volum de KMnO₄ gastat.</li>
-                <li>Repetir l'estandardització almenys 3 cops per obtenir una Normalitat mitjana fiable.</li>
-                <li><strong>Càlcul de la Normalitat (N) del KMnO₄:</strong>
-                    <div class="math-block">$$ N_{KMnO_4} = \frac{\text{massa } Na_2C_2O_4 \text{ (g)}}{PE_{Na_2C_2O_4} \times V_{KMnO_4} \text{ (L)}} = \frac{\text{massa } Na_2C_2O_4 \text{ (g)}}{67.00 \text{ g/eq} \times V_{KMnO_4} \text{ (L)}} $$</div>
-                </li>
+                <li><strong>Preparació (Exemple):</strong> Per 1L de 0.1 N, calen \( \approx 3.16 \, g \) de KMnO₄ (PE = MM/5 = 158.03/5 ≈ 31.61 g/eq). Dissoldre en aigua, escalfar a ebullició, refredar, reposar 24h i filtrar per eliminar MnO₂. Diluir 1:10 per obtenir ~0.01 N.</li>
+                <li><strong>Estandardització amb Oxalat Sòdic (\(Na_2C_2O_4\)):</strong> Patró primari (PE = MM/2 = 134.00 / 2 = 67.00 g/eq). Reacció: \( 5 C_2O_4^{2-} + 2 MnO_4^- + 16 H^+ \rightarrow 10 CO_2 + 2 Mn^{2+} + 8 H_2O \).</li>
+                <li>Pesar amb precisió una quantitat d'oxalat sòdic sec (ex. 10-15 mg per gastar ~15 mL de KMnO₄ 0.01N).</li>
+                <li>Dissoldre en ~25-50 mL d'aigua Milli-Q i afegir ~1-5 mL de H₂SO₄ conc. (PRECAUCIÓ!).</li>
+                <li>Escalfar la dissolució d'oxalat a 70-80°C.</li>
+                <li>Valorar en calent amb la dissolució de KMnO₄ (~0.01 N) des d'una bureta. Afegir lentament al principi, esperant decoloració.</li>
+                <li>Punt final: Persistència d'un color rosat pàl·lid durant ~30 segons. Anotar volum \(V_{KMnO_4}\).</li>
+                <li>Repetir mínim 3 cops.</li>
+                <li><strong>Càlcul Normalitat (N) KMnO₄:</strong> \( N_{KMnO_4} = \frac{\text{massa } Na_2C_2O_4 \text{ (g)}}{0.06700 \text{ g/meq} \times V_{KMnO_4} \text{ (mL)}} \)</li>
             </ol>
 
              <div class="interactive-block-light slider-container">
@@ -118,47 +113,60 @@
                  <div id="std-error" class="mt-4 text-center text-red-600 font-medium" style="min-height: 1.5rem;"></div>
             </div>
 
-            <h3>2. Valoració de la Matèria Orgànica de l'Aigua</h3>
+            <h3>2. Valoració de la Matèria Orgànica de l'Aigua (Retrocés)</h3>
             <ol class="list-decimal list-inside pl-4 space-y-2">
                 <li>Mesurar un volum exacte de la mostra d'aigua (ex. \(V_{mostra} = 100 \, mL\)).</li>
-                <li>Afegir 5 mL de H₂SO₄ concentrat (amb precaució!).</li>
-                <li>Afegir un volum conegut i en excés de la dissolució de KMnO₄ 0.01 N estandarditzada (ex. \(V_{KMnO4, afegit} = 10.00 \, mL\)).</li>
-                <li>Escalfar la mescla a ebullició i mantenir-la durant exactament 10 minuts. La matèria orgànica s'oxida.</li>
-                <li>Encara en calent, afegir un volum conegut i en excés d'una dissolució estandarditzada d'àcid oxàlic 0.01 N (ex. \(V_{H2C2O4, afegit} = 15.00 \, mL\)) fins que la solució esdevingui incolora. L'àcid oxàlic redueix l'excés de KMnO₄ que no ha reaccionat amb la matèria orgànica. (Nota: El procediment original descriu valorar amb oxàlic fins a decoloració, això és una valoració per retrocés lleugerament diferent on s'afegeix excés d'oxàlic i es valora aquest excés amb KMnO₄. Seguirem el procediment descrit al text original: valorar l'excés de KMnO₄ amb oxàlic).</li>
-                 <li>Valorar l'excés de KMnO₄ (que encara dóna color rosa/porpra) amb la dissolució d'àcid oxàlic 0.01 N (\(N_{oxalic}\)) fins a decoloració completa i persistent. Anotar el volum d'àcid oxàlic gastat (\(V_{oxalic, gastat}\)).</li>
+                <li>Afegir ~5 mL de H₂SO₄ concentrat (PRECAUCIÓ!).</li>
+                <li>Afegir un volum conegut i en excés de la dissolució de KMnO₄ estandarditzada (~0.01 N) (ex. \(V_{KMnO4, afegit} = 10.00 \, mL\)).</li>
+                <li>Escalfar a ebullició i mantenir-la durant exactament 10 minuts. La matèria orgànica s'oxida pel KMnO₄.</li>
+                <li>Encara en calent, valorar l'excés de KMnO₄ (color porpra/rosa) amb una dissolució estandarditzada d'àcid oxàlic (~0.01 N) fins a decoloració completa i persistent (~30 s). Anotar el volum d'àcid oxàlic gastat (\(V_{oxalic, gastat}\)).</li>
             </ol>
+             <div class="interactive-block slider-container">
+                  <h4 class="text-lg font-semibold mb-3 text-center text-sky-700">Visualització Conceptual Valoració Retrocés</h4>
+                   <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+                       <div>
+                           <div class="slider-label"><label for="vis-vol-oxalic-slider">Volum H₂C₂O₄ afegit (mL):</label><span id="vis-vol-oxalic-value">5.0</span></div>
+                           <input type="range" id="vis-vol-oxalic-slider" min="0" max="15" value="5.0" step="0.1">
+                       </div>
+                       <div>
+                           <label>Volum KMnO₄ en excés (conceptual):</label>
+                           <div class="w-full h-6 bg-gray-200 rounded mt-2 overflow-hidden border border-gray-300">
+                               <div id="vis-kmno4-excess-bar" class="h-full bg-purple-500 transition-all duration-300" style="width: 50%;"></div>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="titration-flask">
+                       <div id="vis-flask-liquid" class="titration-liquid"></div>
+                   </div>
+                   <p id="vis-titration-status" class="text-center font-medium text-sky-700">Valorant excés de KMnO₄...</p>
+              </div>
         </section>
 
         <section id="reaccions" class="mb-12 p-6 rounded-lg shadow-lg section-bg-light">
             <h2 class="text-sky-700 border-b-2 border-sky-200 pb-2 mb-6">Reaccions Principals</h2>
-            <p>Les semireaccions redox clau són:</p>
-            <p><strong>Oxidació de la matèria orgànica (simplificada):</strong></p>
-            <div class="math-block">$$ \text{Matèria Orgànica} \rightarrow CO_2 + H_2O + n e^- $$</div>
-            <p><strong>Reducció del Permanganat (medi àcid):</strong></p>
-            <div class="math-block">$$ MnO_4^- + 8H^+ + 5e^- \rightarrow Mn^{2+} + 4H_2O $$</div>
-            <p><strong>Oxidació de l'Oxalat (en la valoració de l'excés de KMnO₄):</strong></p>
-            <div class="math-block">$$ C_2O_4^{2-} \rightarrow 2CO_2 + 2e^- $$</div>
-            <p>La reacció global entre permanganat i oxalat és la mateixa que en l'estandardització.</p>
+            <p><strong>Oxidació de la Matèria Orgànica (simplificada):</strong></p>
+            <div class="math-block">$$ \text{Matèria Orgànica} + MnO_4^- (\text{excés}) \xrightarrow{H^+, \Delta} \text{Productes Oxidats} + Mn^{2+} + MnO_4^- (\text{romanent}) $$</div>
+            <p><strong>Valoració de l'excés de Permanganat amb Oxàlic:</strong></p>
+            <div class="math-block">$$ 5 C_2O_4^{2-} + 2 MnO_4^- (\text{romanent}) + 16 H^+ \xrightarrow{\Delta} 10 CO_2 + 2 Mn^{2+} + 8 H_2O $$</div>
+            <p>Les semireaccions clau són:</p>
+            <div class="math-block">$$ MnO_4^- + 8H^+ + 5e^- \rightarrow Mn^{2+} + 4H_2O \quad (E^0 \approx +1.51 V) $$</div>
+            <div class="math-block">$$ C_2O_4^{2-} \rightarrow 2CO_2 + 2e^- \quad (E^0 \approx -0.49 V) $$</div>
         </section>
 
         <section id="calculs" class="mb-12 p-6 rounded-lg shadow-lg section-bg-white">
             <h2 class="text-sky-700 border-b-2 border-sky-200 pb-2 mb-6">Càlculs i Qüestions</h2>
 
             <h3>1. Càlcul de la Matèria Orgànica com ppm d'O₂</h3>
-            <p>La matèria orgànica s'expressa sovint en termes de la quantitat d'oxigen (O₂) que seria equivalent a la quantitat d'agent oxidant (KMnO₄) consumit per la matèria orgànica.</p>
-            <p>Pas 1: Calcular els miliequivalents (meq) totals de KMnO₄ afegits:</p>
-            <div class="math-block">$$ \text{meq}_{KMnO_4, total} = V_{KMnO_4, afegit} (\text{mL}) \times N_{KMnO_4} (\text{eq/L}) $$</div>
-            <p>Pas 2: Calcular els meq d'àcid oxàlic gastats per valorar l'excés de KMnO₄:</p>
-             <div class="math-block">$$ \text{meq}_{H_2C_2O_4} = V_{oxalic, gastat} (\text{mL}) \times N_{oxalic} (\text{eq/L}) $$</div>
-            <p>Pas 3: Com que en la valoració redox els equivalents reaccionen 1:1, els meq d'oxàlic són iguals als meq de KMnO₄ en excés:</p>
-            <div class="math-block">$$ \text{meq}_{KMnO_4, excés} = \text{meq}_{H_2C_2O_4} $$</div>
-            <p>Pas 4: Calcular els meq de KMnO₄ que han reaccionat amb la matèria orgànica:</p>
-            <div class="math-block">$$ \text{meq}_{KMnO_4, reaccionat} = \text{meq}_{KMnO_4, total} - \text{meq}_{KMnO_4, excés} $$</div>
-            <p>Pas 5: Aquests meq són equivalents als meq d'oxigen que s'haurien consumit si l'oxidant fos O₂. El pes equivalent de l'oxigen en reaccions redox on actua com oxidant (O₂ + 4H⁺ + 4e⁻ → 2H₂O) és \(PE_{O_2} = MM_{O_2} / 4 = 32 / 4 = 8 \, \text{g/eq}\). Per tant, 1 equivalent d'O₂ són 8 g, i 1 miliequivalent (meq) són 8 mg.</p>
-            <p>Pas 6: Calcular la massa d'oxigen equivalent consumida:</p>
-             <div class="math-block">$$ \text{mg } O_2 = \text{meq}_{KMnO_4, reaccionat} \times PE_{O_2} (\text{mg/meq}) = \text{meq}_{KMnO_4, reaccionat} \times 8 $$</div>
-            <p>Pas 7: Expressar el resultat com ppm d'O₂ (parts per milió, que equival a mg/L per a dissolucions aquoses diluïdes):</p>
-             <div class="math-block">$$ \text{ppm } O_2 = \frac{\text{mg } O_2}{V_{mostra} (\text{L})} $$</div>
+            <p>La matèria orgànica s'expressa com la quantitat d'oxigen (en mg/L o ppm) que seria equivalent a la quantitat de KMnO₄ consumit per la matèria orgànica.</p>
+            <ol class="list-decimal list-inside pl-4 space-y-1">
+                <li><strong>meq KMnO₄ totals afegits:</strong> \( \text{meq}_{KMnO_4, total} = V_{KMnO_4, afegit} (\text{mL}) \times N_{KMnO_4} (\text{eq/L}) \)</li>
+                <li><strong>meq H₂C₂O₄ gastats = meq KMnO₄ en excés:</strong> \( \text{meq}_{KMnO_4, excés} = V_{oxalic, gastat} (\text{mL}) \times N_{oxalic} (\text{eq/L}) \)</li>
+                <li><strong>meq KMnO₄ reaccionat amb matèria orgànica:</strong> \( \text{meq}_{KMnO_4, reaccionat} = \text{meq}_{KMnO_4, total} - \text{meq}_{KMnO_4, excés} \)</li>
+                <li><strong>Massa O₂ equivalent:</strong> El pes equivalent de l'O₂ actuant com oxidant és \(PE_{O_2} = MM_{O_2} / 4 = 32 / 4 = 8 \, \text{g/eq} = 8 \, \text{mg/meq}\).
+                <div class="math-block">$$ \text{mg } O_2 = \text{meq}_{KMnO_4, reaccionat} \times 8 \, (\text{mg/meq}) $$</div></li>
+                <li><strong>Concentració en ppm O₂:</strong></li>
+                 <div class="math-block">$$ \text{ppm } O_2 \, (\text{mg/L}) = \frac{\text{mg } O_2}{V_{mostra} (\text{L})} $$</div>
+            </ol>
 
              <div class="interactive-block-light slider-container">
                  <h4 class="text-lg font-semibold mb-3 text-center text-sky-700">Calculadora Matèria Orgànica (ppm O₂)</h4>
@@ -218,7 +226,7 @@
             const valueSpan = document.getElementById(valueSpanId);
             if (!slider || !valueSpan) return;
             const updateFunc = options.callback || (() => {});
-            const formatFunc = options.format || ((val) => parseFloat(val).toFixed(options.decimals || 2));
+            const formatFunc = options.format || ((val) => parseFloat(val).toFixed(options.decimals === undefined ? 2 : options.decimals));
             const valueAttr = options.valueAttr || 'value';
             const updateDisplay = () => {
                 valueSpan.textContent = formatFunc(slider[valueAttr]);
@@ -290,10 +298,10 @@
                 const meq_kmno4_exces = meq_oxalic;
                 const meq_kmno4_reac = meq_kmno4_total - meq_kmno4_exces;
 
-                if (meq_kmno4_reac < 0) throw new Error("Volum oxàlic > KMnO₄ afegit?");
+                if (meq_kmno4_reac < -1e-9) throw new Error("Volum oxàlic > KMnO₄ afegit?");
 
                 const peq_o2_mg = 8.0;
-                const mg_o2 = meq_kmno4_reac * peq_o2_mg;
+                const mg_o2 = Math.max(0, meq_kmno4_reac) * peq_o2_mg;
                 const vol_mostra_l = vol_mostra_ml / 1000;
                 const ppm_o2 = mg_o2 / vol_mostra_l;
 
@@ -301,15 +309,48 @@
 
                 meqKMnO4TotRes.textContent = meq_kmno4_total.toFixed(3);
                 meqOxalicRes.textContent = meq_oxalic.toFixed(3);
-                meqKMnO4ReacRes.textContent = meq_kmno4_reac.toFixed(3);
+                meqKMnO4ReacRes.textContent = Math.max(0, meq_kmno4_reac).toFixed(3);
                 mgO2Res.textContent = mg_o2.toFixed(3);
                 ppmO2Res.textContent = ppm_o2.toFixed(1);
+
+                updateTitrationVisual(meq_kmno4_total, meq_oxalic);
 
             } catch(e) {
                 errorDiv.textContent = e.message;
                 meqKMnO4TotRes.textContent = "Error"; meqOxalicRes.textContent = "Error"; meqKMnO4ReacRes.textContent = "Error";
                 mgO2Res.textContent = "Error"; ppmO2Res.textContent = "Error";
             }
+        }
+
+        function updateTitrationVisual(meq_total, meq_titrant) {
+             const flaskLiquid = document.getElementById('vis-flask-liquid');
+             const excessBar = document.getElementById('vis-kmno4-excess-bar');
+             const statusText = document.getElementById('vis-titration-status');
+             if (!flaskLiquid || !excessBar || !statusText) return;
+
+             const meq_excess = Math.max(0, meq_total - meq_titrant);
+             const fraction_excess = meq_total > 1e-9 ? (meq_excess / meq_total) * 100 : 0;
+             const fraction_titrated = meq_total > 1e-9 ? (meq_titrant / meq_total) * 100 : (meq_titrant > 1e-9 ? 100 : 0);
+
+             excessBar.style.width = `${Math.min(100, fraction_excess)}%`;
+
+             if (meq_titrant < meq_total - 1e-9) {
+                 flaskLiquid.style.height = `${70 + fraction_titrated * 0.1}%`;
+                 flaskLiquid.classList.add('titration-color-excess');
+                 flaskLiquid.classList.remove('titration-color-endpoint');
+                 statusText.textContent = "Valorant excés de KMnO₄...";
+             } else if (meq_titrant >= meq_total - 1e-9 && meq_titrant <= meq_total + 1e-9) {
+                 flaskLiquid.style.height = `80%`;
+                 flaskLiquid.classList.remove('titration-color-excess');
+                 flaskLiquid.classList.add('titration-color-endpoint');
+                 statusText.textContent = "Punt final assolit!";
+             } else {
+                  flaskLiquid.style.height = `80%`;
+                  flaskLiquid.classList.remove('titration-color-excess');
+                  flaskLiquid.classList.remove('titration-color-endpoint');
+                  flaskLiquid.style.backgroundColor = '#bfdbfe';
+                  statusText.textContent = "Excés d'Oxàlic afegit.";
+             }
         }
 
         setupSlider('std-massa-oxalat-slider', 'std-massa-oxalat-value', {decimals: 1, callback: calculateStdNormality});
@@ -319,6 +360,16 @@
         setupSlider('mo-norm-kmno4-slider', 'mo-norm-kmno4-value', {decimals: 4, callback: calculateOrganicMatter});
         setupSlider('mo-vol-oxalic-slider', 'mo-vol-oxalic-value', {decimals: 1, callback: calculateOrganicMatter});
         setupSlider('mo-norm-oxalic-slider', 'mo-norm-oxalic-value', {decimals: 4, callback: calculateOrganicMatter});
+        setupSlider('vis-vol-oxalic-slider', 'vis-vol-oxalic-value', {decimals: 1, callback: ()=>{
+             const norm_oxalic = parseFloat(document.getElementById('mo-norm-oxalic-slider').value);
+             const vol_kmno4 = parseFloat(document.getElementById('mo-vol-kmno4-slider').value);
+             const norm_kmno4 = parseFloat(document.getElementById('mo-norm-kmno4-slider').value);
+             const vol_oxalic = parseFloat(document.getElementById('vis-vol-oxalic-slider').value);
+             if(isFinite(norm_oxalic) && isFinite(vol_kmno4) && isFinite(norm_kmno4) && isFinite(vol_oxalic)) {
+                updateTitrationVisual(vol_kmno4 * norm_kmno4, vol_oxalic * norm_oxalic);
+             }
+        }});
+
 
         document.getElementById('std-calc-btn')?.addEventListener('click', calculateStdNormality);
         document.getElementById('mo-calc-btn')?.addEventListener('click', calculateOrganicMatter);
@@ -332,4 +383,5 @@
 
 </body>
 </html>
+
 
