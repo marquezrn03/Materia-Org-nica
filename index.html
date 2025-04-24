@@ -1,1 +1,335 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volumetria Redox: Permanganimetria</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; background-color: #f8fafc; }
+        label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: #374151; font-size: 0.875rem; }
+        input[type="range"] { width: 100%; cursor: pointer; accent-color: #0ea5e9; height: 8px; background-color: #e0f2fe; border-radius: 9999px; appearance: none; -webkit-appearance: none; }
+        input[type="range"]::-webkit-slider-thumb { appearance: none; -webkit-appearance: none; width: 16px; height: 16px; background: #0ea5e9; border-radius: 50%; cursor: pointer; }
+        input[type="range"]::-moz-range-thumb { width: 16px; height: 16px; background: #0ea5e9; border-radius: 50%; cursor: pointer; border: none; }
+        input[type="number"], select { padding: 0.5rem; border: 1px solid #D1D5DB; border-radius: 0.375rem; width: 100%; }
+        button { background-color: #38bdf8; color: #0c4a6e; padding: 0.5rem 1rem; border-radius: 0.375rem; font-weight: 600; transition: background-color 0.2s; display: inline-block; text-align: center; border: none; cursor: pointer;}
+        button:hover { background-color: #0ea5e9; }
+        h1 { color: #111827; font-size: 1.875rem; line-height: 2.25rem; font-weight: 700;}
+        h2 { color: #0c4a6e; font-size: 1.6rem; line-height: 2.1rem; font-weight: 700; border-bottom: 3px solid #7dd3fc; padding-bottom: 0.5rem; margin-top: 2.5rem; margin-bottom: 1.5rem; }
+        h3 { color: #0369a1; font-size: 1.25rem; line-height: 1.75rem; font-weight: 600; margin-top: 2rem; margin-bottom: 1rem; border-bottom: 1px solid #bae6fd; padding-bottom: 0.25rem; }
+        p, li { color: #374151; line-height: 1.75; margin-bottom: 1rem; }
+        strong { color: #1F2937; font-weight: 600; }
+        .section-bg-light { background-color: #f0f9ff; }
+        .section-bg-white { background-color: #FFFFFF; }
+        .interactive-block { margin-top: 1.5rem; margin-bottom: 1.5rem; padding: 1.5rem; border: 1px solid #e0f2fe; border-radius: 0.5rem; background-color: #ffffff; box-shadow: inset 0 1px 3px rgba(0,0,0,0.05); }
+        .interactive-block-light { margin-top: 1.5rem; margin-bottom: 1.5rem; padding: 1.5rem; border: 1px solid #e0f2fe; border-radius: 0.5rem; background-color: #f0f9ff; box-shadow: inset 0 1px 3px rgba(0,0,0,0.05); }
+        .output-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-top: 1rem; }
+        .output-item { background-color: #e0f2fe; border: 1px solid #bae6fd; border-radius: 0.375rem; padding: 0.75rem; text-align: center; }
+        .output-label { display: block; font-size: 0.8rem; color: #075985; margin-bottom: 0.25rem; }
+        .output-value { font-size: 1.1rem; font-weight: 600; color: #0c4a6e; word-wrap: break-word; }
+        .output-unit { font-size: 0.75rem; color: #0369a1; margin-left: 0.25rem;}
+        .error-text { color: #ef4444; font-weight: bold; }
+        .math-block { margin: 1.5rem 0; padding: 1rem; background-color: #f0f9ff; border-left: 4px solid #38bdf8; font-size: 1.1rem; overflow-x: auto;}
+        .footer-attribution { margin-top: 1.5rem; font-size: 0.875rem; line-height: 1.25rem; color: #6b7280; text-align: center; }
+        .titration-flask { width: 100px; height: 150px; border: 2px solid #9ca3af; border-radius: 0 0 50px 50px; margin: 1rem auto; position: relative; background-color: #eff6ff; overflow: hidden;}
+        .titration-liquid { position: absolute; bottom: 0; left: 0; width: 100%; height: 70%; transition: background-color 0.3s; background-color: #bfdbfe;}
+        .titration-endpoint { background-color: #fbcfe8 !important; } /* light pink */
+        .titration-excess { background-color: #f9a8d4 !important; } /* stronger pink */
+        .slider-container div { margin-bottom: 1rem;}
+        .slider-label { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.25rem;}
+        .slider-label span:last-child { font-size: 0.9rem; font-weight: 500; color: #075985; min-width: 70px; text-align: right;}
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 antialiased">
+
+    <header class="bg-gradient-to-r from-sky-600 to-cyan-600 text-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <h1 class="text-2xl md:text-3xl font-bold">11. Volumetries Oxidació-Reducció</h1>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-8">
+
+        <section id="intro" class="mb-12 p-6 rounded-lg shadow-lg section-bg-white">
+            <h2 class="text-sky-700 border-b-2 border-sky-200 pb-2 mb-6">11.1 Matèria Orgànica de l'Aigua (Permanganimetria)</h2>
+            <p>S'agrupa sota el concepte de <strong>matèria orgànica de l'aigua</strong> totes les substàncies presents que poden ser oxidades químicament, en condicions definides, per un agent oxidant fort com el permanganat de potassi (KMnO₄) en medi àcid i a temperatura d'ebullició.</p>
+            <p>La presència de matèria orgànica a l'aigua pot tenir diverses implicacions:</p>
+            <ul class="list-disc list-inside pl-4 mb-4">
+                <li><strong>Qualitat organolèptica:</strong> Algunes matèries orgàniques són causa del color i del mal gust de l'aigua.</li>
+                <li><strong>Desenvolupament microbiològic:</strong> Afavoreixen el creixement de microorganismes (algues, fongs, bacteris) que poden adherir-se a les canonades i secretar substàncies oloroses.</li>
+                <li><strong>Indicador de contaminació:</strong> Un contingut elevat de matèria orgànica pot ser indicatiu de contaminació bacteriològica (excrements, matèria en descomposició) o química (abocaments industrials, pesticides).</li>
+            </ul>
+            <p>La determinació de la matèria orgànica oxidable amb permanganat, sovint expressada com a "oxigen consumit" o "índex de permanganat", és un paràmetre clàssic de control de la qualitat de l'aigua.</p>
+        </section>
+
+        <section id="reactius" class="mb-12 p-6 rounded-lg shadow-lg section-bg-light">
+            <h2 class="text-sky-700 border-b-2 border-sky-200 pb-2 mb-6">Reactius Necessaris</h2>
+            <ul class="list-disc list-inside pl-4 mb-4">
+                <li>Àcid sulfúric concentrat (\(H_2SO_4\))</li>
+                <li>Permanganat potàssic (\(KMnO_4\)) dissolució aprox. 0.01 N (Normalitat)</li>
+                <li>Àcid oxàlic (\(H_2C_2O_4\)) o Oxalat sòdic (\(Na_2C_2O_4\)) patró primari o dissolució valorada 0.01 N</li>
+                <li>Aigua destil·lada o de qualitat equivalent (Milli-Q)</li>
+            </ul>
+        </section>
+
+        <section id="procediment" class="mb-12 p-6 rounded-lg shadow-lg section-bg-white">
+            <h2 class="text-sky-700 border-b-2 border-sky-200 pb-2 mb-6">Procediment Experimental</h2>
+
+            <h3>1. Preparació i Estandardització de la dissolució de KMnO₄ (~0.01 N)</h3>
+            <p>El KMnO₄ no és un patró primari pur, per la qual cosa la seva dissolució s'ha d'estandarditzar.</p>
+            <ol class="list-decimal list-inside pl-4 space-y-2">
+                <li>Preparar una dissolució aproximadament 0.1 N de KMnO₄ (Massa molar KMnO₄ ≈ 158.03 g/mol). Per a la reacció en medi àcid (Mn⁷⁺ → Mn²⁺, 5 electrons), el pes equivalent és MM/5 ≈ 31.61 g/eq. Per preparar 1L de 0.1 N, es necessiten 3.16 g. Per a 0.01 N, es necessitarien 0.316 g/L. Sovint es prepara una 0.1 N i es dilueix 1:10 per obtenir 0.01 N.</li>
+                <li>Escalfar la dissolució preparada a ebullició durant un temps i deixar refredar i reposar (per oxidar impureses reductores) i filtrar si cal.</li>
+                <li><strong>Estandardització amb Oxalat Sòdic (\(Na_2C_2O_4\)):</strong> L'oxalat sòdic (MM ≈ 134.00 g/mol) és un bon patró primari. La reacció és:
+                    <div class="math-block">$$ 5 C_2O_4^{2-} + 2 MnO_4^- + 16 H^+ \rightarrow 10 CO_2 + 2 Mn^{2+} + 8 H_2O $$</div>
+                    El pes equivalent del Na₂C₂O₄ és MM/2 = 134.00 / 2 = 67.00 g/eq.
+                </li>
+                <li>Pesar amb precisió una quantitat d'oxalat sòdic sec (assecat a 105-110°C) calculada per consumir uns 15-25 mL de la dissolució de KMnO₄ ~0.01 N.</li>
+                <li>Dissoldre l'oxalat en uns 25-50 mL d'aigua Milli-Q i afegir 1-5 mL de H₂SO₄ concentrat (amb precaució!).</li>
+                <li>Escalfar la dissolució d'oxalat a uns 70-80°C (prop de l'ebullició).</li>
+                <li>Valorar en calent amb la dissolució de KMnO₄ des d'una bureta. Afegir lentament al principi, esperant que el color porpra desaparegui abans d'afegir més (la reacció és autocatalítica per Mn²⁺).</li>
+                <li>Continuar la valoració fins que una gota de KMnO₄ produeixi una persistència del color rosat pàl·lid durant almenys 30 segons. Aquest és el punt final. Anotar el volum de KMnO₄ gastat.</li>
+                <li>Repetir l'estandardització almenys 3 cops per obtenir una Normalitat mitjana fiable.</li>
+                <li><strong>Càlcul de la Normalitat (N) del KMnO₄:</strong>
+                    <div class="math-block">$$ N_{KMnO_4} = \frac{\text{massa } Na_2C_2O_4 \text{ (g)}}{PE_{Na_2C_2O_4} \times V_{KMnO_4} \text{ (L)}} = \frac{\text{massa } Na_2C_2O_4 \text{ (g)}}{67.00 \text{ g/eq} \times V_{KMnO_4} \text{ (L)}} $$</div>
+                </li>
+            </ol>
+
+             <div class="interactive-block-light slider-container">
+                 <h4 class="text-lg font-semibold mb-3 text-center text-sky-700">Calculadora Estandardització KMnO₄</h4>
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+                     <div>
+                         <div class="slider-label"><label for="std-massa-oxalat-slider">Massa Na₂C₂O₄ (mg):</label><span id="std-massa-oxalat-value">10.0</span></div>
+                         <input type="range" id="std-massa-oxalat-slider" min="5" max="20" value="10.0" step="0.1">
+                     </div>
+                     <div>
+                          <div class="slider-label"><label for="std-vol-kmno4-slider">Volum KMnO₄ gastat (mL):</label><span id="std-vol-kmno4-value">15.0</span></div>
+                          <input type="range" id="std-vol-kmno4-slider" min="5" max="30" value="15.0" step="0.1">
+                     </div>
+                 </div>
+                 <div class="text-center mb-4"><button id="std-calc-btn">Calcular Normalitat KMnO₄</button></div>
+                 <div class="output-grid">
+                     <div class="output-item md:col-span-2"><span class="output-label">Normalitat KMnO₄ (N)</span><span class="output-value" id="std-res-normality">0.00995</span></div>
+                 </div>
+                 <div id="std-error" class="mt-4 text-center text-red-600 font-medium" style="min-height: 1.5rem;"></div>
+            </div>
+
+            <h3>2. Valoració de la Matèria Orgànica de l'Aigua</h3>
+            <ol class="list-decimal list-inside pl-4 space-y-2">
+                <li>Mesurar un volum exacte de la mostra d'aigua (ex. \(V_{mostra} = 100 \, mL\)).</li>
+                <li>Afegir 5 mL de H₂SO₄ concentrat (amb precaució!).</li>
+                <li>Afegir un volum conegut i en excés de la dissolució de KMnO₄ 0.01 N estandarditzada (ex. \(V_{KMnO4, afegit} = 10.00 \, mL\)).</li>
+                <li>Escalfar la mescla a ebullició i mantenir-la durant exactament 10 minuts. La matèria orgànica s'oxida.</li>
+                <li>Encara en calent, afegir un volum conegut i en excés d'una dissolució estandarditzada d'àcid oxàlic 0.01 N (ex. \(V_{H2C2O4, afegit} = 15.00 \, mL\)) fins que la solució esdevingui incolora. L'àcid oxàlic redueix l'excés de KMnO₄ que no ha reaccionat amb la matèria orgànica. (Nota: El procediment original descriu valorar amb oxàlic fins a decoloració, això és una valoració per retrocés lleugerament diferent on s'afegeix excés d'oxàlic i es valora aquest excés amb KMnO₄. Seguirem el procediment descrit al text original: valorar l'excés de KMnO₄ amb oxàlic).</li>
+                 <li>Valorar l'excés de KMnO₄ (que encara dóna color rosa/porpra) amb la dissolució d'àcid oxàlic 0.01 N (\(N_{oxalic}\)) fins a decoloració completa i persistent. Anotar el volum d'àcid oxàlic gastat (\(V_{oxalic, gastat}\)).</li>
+            </ol>
+        </section>
+
+        <section id="reaccions" class="mb-12 p-6 rounded-lg shadow-lg section-bg-light">
+            <h2 class="text-sky-700 border-b-2 border-sky-200 pb-2 mb-6">Reaccions Principals</h2>
+            <p>Les semireaccions redox clau són:</p>
+            <p><strong>Oxidació de la matèria orgànica (simplificada):</strong></p>
+            <div class="math-block">$$ \text{Matèria Orgànica} \rightarrow CO_2 + H_2O + n e^- $$</div>
+            <p><strong>Reducció del Permanganat (medi àcid):</strong></p>
+            <div class="math-block">$$ MnO_4^- + 8H^+ + 5e^- \rightarrow Mn^{2+} + 4H_2O $$</div>
+            <p><strong>Oxidació de l'Oxalat (en la valoració de l'excés de KMnO₄):</strong></p>
+            <div class="math-block">$$ C_2O_4^{2-} \rightarrow 2CO_2 + 2e^- $$</div>
+            <p>La reacció global entre permanganat i oxalat és la mateixa que en l'estandardització.</p>
+        </section>
+
+        <section id="calculs" class="mb-12 p-6 rounded-lg shadow-lg section-bg-white">
+            <h2 class="text-sky-700 border-b-2 border-sky-200 pb-2 mb-6">Càlculs i Qüestions</h2>
+
+            <h3>1. Càlcul de la Matèria Orgànica com ppm d'O₂</h3>
+            <p>La matèria orgànica s'expressa sovint en termes de la quantitat d'oxigen (O₂) que seria equivalent a la quantitat d'agent oxidant (KMnO₄) consumit per la matèria orgànica.</p>
+            <p>Pas 1: Calcular els miliequivalents (meq) totals de KMnO₄ afegits:</p>
+            <div class="math-block">$$ \text{meq}_{KMnO_4, total} = V_{KMnO_4, afegit} (\text{mL}) \times N_{KMnO_4} (\text{eq/L}) $$</div>
+            <p>Pas 2: Calcular els meq d'àcid oxàlic gastats per valorar l'excés de KMnO₄:</p>
+             <div class="math-block">$$ \text{meq}_{H_2C_2O_4} = V_{oxalic, gastat} (\text{mL}) \times N_{oxalic} (\text{eq/L}) $$</div>
+            <p>Pas 3: Com que en la valoració redox els equivalents reaccionen 1:1, els meq d'oxàlic són iguals als meq de KMnO₄ en excés:</p>
+            <div class="math-block">$$ \text{meq}_{KMnO_4, excés} = \text{meq}_{H_2C_2O_4} $$</div>
+            <p>Pas 4: Calcular els meq de KMnO₄ que han reaccionat amb la matèria orgànica:</p>
+            <div class="math-block">$$ \text{meq}_{KMnO_4, reaccionat} = \text{meq}_{KMnO_4, total} - \text{meq}_{KMnO_4, excés} $$</div>
+            <p>Pas 5: Aquests meq són equivalents als meq d'oxigen que s'haurien consumit si l'oxidant fos O₂. El pes equivalent de l'oxigen en reaccions redox on actua com oxidant (O₂ + 4H⁺ + 4e⁻ → 2H₂O) és \(PE_{O_2} = MM_{O_2} / 4 = 32 / 4 = 8 \, \text{g/eq}\). Per tant, 1 equivalent d'O₂ són 8 g, i 1 miliequivalent (meq) són 8 mg.</p>
+            <p>Pas 6: Calcular la massa d'oxigen equivalent consumida:</p>
+             <div class="math-block">$$ \text{mg } O_2 = \text{meq}_{KMnO_4, reaccionat} \times PE_{O_2} (\text{mg/meq}) = \text{meq}_{KMnO_4, reaccionat} \times 8 $$</div>
+            <p>Pas 7: Expressar el resultat com ppm d'O₂ (parts per milió, que equival a mg/L per a dissolucions aquoses diluïdes):</p>
+             <div class="math-block">$$ \text{ppm } O_2 = \frac{\text{mg } O_2}{V_{mostra} (\text{L})} $$</div>
+
+             <div class="interactive-block-light slider-container">
+                 <h4 class="text-lg font-semibold mb-3 text-center text-sky-700">Calculadora Matèria Orgànica (ppm O₂)</h4>
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+                     <div>
+                         <div class="slider-label"><label for="mo-vol-mostra-slider">Volum Mostra (mL):</label><span id="mo-vol-mostra-value">100</span></div>
+                         <input type="range" id="mo-vol-mostra-slider" min="50" max="250" value="100" step="5">
+                     </div>
+                     <div>
+                         <div class="slider-label"><label for="mo-vol-kmno4-slider">Volum KMnO₄ afegit (mL):</label><span id="mo-vol-kmno4-value">10.0</span></div>
+                         <input type="range" id="mo-vol-kmno4-slider" min="5" max="25" value="10.0" step="0.1">
+                     </div>
+                      <div>
+                         <div class="slider-label"><label for="mo-norm-kmno4-slider">Normalitat KMnO₄ (N):</label><span id="mo-norm-kmno4-value">0.0100</span></div>
+                         <input type="range" id="mo-norm-kmno4-slider" min="0.008" max="0.012" value="0.0100" step="0.0001">
+                     </div>
+                      <div>
+                         <div class="slider-label"><label for="mo-vol-oxalic-slider">Volum H₂C₂O₄ gastat (mL):</label><span id="mo-vol-oxalic-value">5.0</span></div>
+                         <input type="range" id="mo-vol-oxalic-slider" min="0" max="20" value="5.0" step="0.1">
+                     </div>
+                      <div>
+                         <div class="slider-label"><label for="mo-norm-oxalic-slider">Normalitat H₂C₂O₄ (N):</label><span id="mo-norm-oxalic-value">0.0100</span></div>
+                         <input type="range" id="mo-norm-oxalic-slider" min="0.008" max="0.012" value="0.0100" step="0.0001">
+                     </div>
+                 </div>
+                 <div class="text-center mb-4"><button id="mo-calc-btn">Calcular ppm O₂</button></div>
+                 <div class="output-grid">
+                     <div class="output-item"><span class="output-label">meq KMnO₄ total</span><span class="output-value" id="mo-res-meq-kmno4-tot">0.100</span></div>
+                     <div class="output-item"><span class="output-label">meq H₂C₂O₄ (excés KMnO₄)</span><span class="output-value" id="mo-res-meq-oxalic">0.050</span></div>
+                     <div class="output-item"><span class="output-label">meq KMnO₄ reaccionat</span><span class="output-value" id="mo-res-meq-kmno4-reac">0.050</span></div>
+                     <div class="output-item"><span class="output-label">mg O₂</span><span class="output-value" id="mo-res-mg-o2">0.400</span></div>
+                     <div class="output-item md:col-span-2"><span class="output-label">Matèria Orgànica</span><span class="output-value" id="mo-res-ppm-o2">4.0</span><span class="output-unit">ppm O₂</span></div>
+                 </div>
+                 <div id="mo-error" class="mt-4 text-center text-red-600 font-medium" style="min-height: 1.5rem;"></div>
+            </div>
+
+            <h3>2. Indicadors en Volumetries Redox</h3>
+            <p>En les valoracions amb permanganat de potassi (permanganimetria) en medi àcid, normalment <strong>no es necessita un indicador extern</strong>. El propi ió permanganat (\(MnO_4^-\)) actua com a <strong>autoindicador</strong>.</p>
+            <ul class="list-disc list-inside pl-4 mb-4">
+                <li>L'ió \(MnO_4^-\) té un color porpra intens.</li>
+                <li>L'ió \(Mn^{2+}\), producte de la reducció en medi àcid, és pràcticament incolor.</li>
+                <li>Mentre hi hagi substància reductora (matèria orgànica o àcid oxàlic) a la dissolució, el \(MnO_4^-\) afegit es consumirà ràpidament i la dissolució romandrà incolora o quasi incolora.</li>
+                <li>El punt final s'assoleix quan tota la substància reductora s'ha consumit. La primera gota d'excés de \(MnO_4^-\) que s'afegeix ja no reacciona i confereix a la dissolució un color rosat pàl·lid persistent, indicant el final de la valoració.</li>
+            </ul>
+            <p>En altres valoracions redox es poden utilitzar indicadors redox específics (com la ferroïna per a valoracions amb Ce⁴⁺) o indicadors generals com el midó (per a valoracions amb iode).</p>
+        </section>
+
+    </main>
+
+     <footer class="mt-16 pt-8 border-t border-gray-300 text-sm text-gray-600">
+         <p class="footer-attribution">Curs Volumetries Redox: Permanganimetria</p>
+     </footer>
+
+    <script>
+        function setupSlider(sliderId, valueSpanId, options = {}) {
+            const slider = document.getElementById(sliderId);
+            const valueSpan = document.getElementById(valueSpanId);
+            if (!slider || !valueSpan) return;
+            const updateFunc = options.callback || (() => {});
+            const formatFunc = options.format || ((val) => parseFloat(val).toFixed(options.decimals || 2));
+            const valueAttr = options.valueAttr || 'value';
+            const updateDisplay = () => {
+                valueSpan.textContent = formatFunc(slider[valueAttr]);
+                if(options.displayId) {
+                    const displayEl = document.getElementById(options.displayId);
+                    if(displayEl) displayEl.textContent = Math.pow(10, parseFloat(slider[valueAttr])).toExponential(1);
+                }
+            };
+            slider.addEventListener('input', () => {
+                updateDisplay();
+                updateFunc();
+            });
+            updateDisplay();
+        }
+
+        function calculateStdNormality() {
+            const massaOxalatSlider = document.getElementById('std-massa-oxalat-slider');
+            const volKMnO4Slider = document.getElementById('std-vol-kmno4-slider');
+            const normalityRes = document.getElementById('std-res-normality');
+            const errorDiv = document.getElementById('std-error');
+             if(!massaOxalatSlider || !volKMnO4Slider || !normalityRes || !errorDiv) return;
+            errorDiv.textContent = '';
+            try {
+                const massa_mg = parseFloat(massaOxalatSlider.value);
+                const volum_ml = parseFloat(volKMnO4Slider.value);
+                if (isNaN(massa_mg) || isNaN(volum_ml) || massa_mg <= 0 || volum_ml <= 0) throw new Error("Entrada invàlida.");
+                const massa_g = massa_mg / 1000;
+                const volum_l = volum_ml / 1000;
+                const peq_oxalat = 67.00;
+                const normality = massa_g / (peq_oxalat * volum_l);
+                 if (!isFinite(normality) || normality <= 0) throw new Error("Càlcul de Normalitat invàlid.");
+                normalityRes.textContent = normality.toFixed(5);
+            } catch(e) {
+                errorDiv.textContent = e.message;
+                normalityRes.textContent = "Error";
+            }
+        }
+
+        function calculateOrganicMatter() {
+            const volMostraSlider = document.getElementById('mo-vol-mostra-slider');
+            const volKMnO4Slider = document.getElementById('mo-vol-kmno4-slider');
+            const normKMnO4Slider = document.getElementById('mo-norm-kmno4-slider');
+            const volOxalicSlider = document.getElementById('mo-vol-oxalic-slider');
+            const normOxalicSlider = document.getElementById('mo-norm-oxalic-slider');
+            const errorDiv = document.getElementById('mo-error');
+
+            const meqKMnO4TotRes = document.getElementById('mo-res-meq-kmno4-tot');
+            const meqOxalicRes = document.getElementById('mo-res-meq-oxalic');
+            const meqKMnO4ReacRes = document.getElementById('mo-res-meq-kmno4-reac');
+            const mgO2Res = document.getElementById('mo-res-mg-o2');
+            const ppmO2Res = document.getElementById('mo-res-ppm-o2');
+
+            if (!volMostraSlider || !volKMnO4Slider || !normKMnO4Slider || !volOxalicSlider || !normOxalicSlider || !errorDiv ||
+                !meqKMnO4TotRes || !meqOxalicRes || !meqKMnO4ReacRes || !mgO2Res || !ppmO2Res) return;
+
+            errorDiv.textContent = '';
+            try {
+                const vol_mostra_ml = parseFloat(volMostraSlider.value);
+                const vol_kmno4_ml = parseFloat(volKMnO4Slider.value);
+                const norm_kmno4 = parseFloat(normKMnO4Slider.value);
+                const vol_oxalic_ml = parseFloat(volOxalicSlider.value);
+                const norm_oxalic = parseFloat(normOxalicSlider.value);
+
+                if (isNaN(vol_mostra_ml) || isNaN(vol_kmno4_ml) || isNaN(norm_kmno4) || isNaN(vol_oxalic_ml) || isNaN(norm_oxalic) ||
+                    vol_mostra_ml <= 0 || vol_kmno4_ml <= 0 || norm_kmno4 <= 0 || vol_oxalic_ml < 0 || norm_oxalic <= 0) throw new Error("Entrada invàlida.");
+
+                const meq_kmno4_total = vol_kmno4_ml * norm_kmno4;
+                const meq_oxalic = vol_oxalic_ml * norm_oxalic;
+                const meq_kmno4_exces = meq_oxalic;
+                const meq_kmno4_reac = meq_kmno4_total - meq_kmno4_exces;
+
+                if (meq_kmno4_reac < 0) throw new Error("Volum oxàlic > KMnO₄ afegit?");
+
+                const peq_o2_mg = 8.0;
+                const mg_o2 = meq_kmno4_reac * peq_o2_mg;
+                const vol_mostra_l = vol_mostra_ml / 1000;
+                const ppm_o2 = mg_o2 / vol_mostra_l;
+
+                 if (!isFinite(ppm_o2)) throw new Error("Càlcul ppm O₂ invàlid.");
+
+                meqKMnO4TotRes.textContent = meq_kmno4_total.toFixed(3);
+                meqOxalicRes.textContent = meq_oxalic.toFixed(3);
+                meqKMnO4ReacRes.textContent = meq_kmno4_reac.toFixed(3);
+                mgO2Res.textContent = mg_o2.toFixed(3);
+                ppmO2Res.textContent = ppm_o2.toFixed(1);
+
+            } catch(e) {
+                errorDiv.textContent = e.message;
+                meqKMnO4TotRes.textContent = "Error"; meqOxalicRes.textContent = "Error"; meqKMnO4ReacRes.textContent = "Error";
+                mgO2Res.textContent = "Error"; ppmO2Res.textContent = "Error";
+            }
+        }
+
+        setupSlider('std-massa-oxalat-slider', 'std-massa-oxalat-value', {decimals: 1, callback: calculateStdNormality});
+        setupSlider('std-vol-kmno4-slider', 'std-vol-kmno4-value', {decimals: 1, callback: calculateStdNormality});
+        setupSlider('mo-vol-mostra-slider', 'mo-vol-mostra-value', {decimals: 0, callback: calculateOrganicMatter});
+        setupSlider('mo-vol-kmno4-slider', 'mo-vol-kmno4-value', {decimals: 1, callback: calculateOrganicMatter});
+        setupSlider('mo-norm-kmno4-slider', 'mo-norm-kmno4-value', {decimals: 4, callback: calculateOrganicMatter});
+        setupSlider('mo-vol-oxalic-slider', 'mo-vol-oxalic-value', {decimals: 1, callback: calculateOrganicMatter});
+        setupSlider('mo-norm-oxalic-slider', 'mo-norm-oxalic-value', {decimals: 4, callback: calculateOrganicMatter});
+
+        document.getElementById('std-calc-btn')?.addEventListener('click', calculateStdNormality);
+        document.getElementById('mo-calc-btn')?.addEventListener('click', calculateOrganicMatter);
+
+        window.addEventListener('load', () => {
+            calculateStdNormality();
+            calculateOrganicMatter();
+        });
+
+    </script>
+
+</body>
+</html>
 
